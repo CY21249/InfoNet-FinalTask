@@ -1,21 +1,26 @@
 /**
 * File transpiled from TypeScript and bundled 
-* - at 2023/12/28 22:43:48
+* - at 2023/12/28 23:10:20
 * - file: ./client/calendar/script.ts -> ./static/calendar/script.js
 * - using: https://deno.land/x/emit@0.32.0/mod.ts
 */
 function html(bases, ...args) {
     const idPrefix = "__html-template_will-be-replaced-slot__";
     let htmlElemStr = "";
+    const elems = [];
     for(let i = 0; i < bases.length; i++){
         htmlElemStr += bases[i];
-        if (i < args.length) htmlElemStr += `<div id="${idPrefix}${i}"></div>`;
+        const arg = args[i];
+        if (arg === undefined) continue;
+        if (arg instanceof HTMLElement) {
+            htmlElemStr += `<div id="${idPrefix}${elems.length}"></div>`;
+            elems.push(arg);
+        } else htmlElemStr += arg;
     }
     const $element = _createElement(htmlElemStr);
-    for(let i = 0; i < args.length; i++){
-        const arg = args[i];
-        const $elem = arg instanceof HTMLElement ? arg : _createElement(arg);
-        $element.querySelector(`#${idPrefix}${i}`).replaceWith($elem);
+    for(let i = 0; i < elems.length; i++){
+        const elem = elems[i];
+        $element.querySelector(`#${idPrefix}${i}`).replaceWith(elem);
     }
     return Array.from($element.children);
 }
@@ -49,6 +54,10 @@ setCalendarDisplayOptions({
     year: 2024,
     month: 1
 });
+changeCalendarDisplay({
+    year: 2024,
+    month: 1
+});
 function getCalendarDisplayOptions() {
     return {
         year: +$calendarDisplayOptionElems.year.value,
@@ -70,10 +79,21 @@ function createCalendarDays({ year, month }) {
     }
     const date = new Date(firstDate.getTime());
     while(date.getFullYear() === year && date.getMonth() + 1 === month){
-        $divList.push(html`<div class="day">
+        $divList.push(html`<div class="day dow-${getDayOfWeekStr(date.getDay())}">
                 <p>${date.getDate()}</p>
             </div>`[0]);
         date.setDate(date.getDate() + 1);
     }
     return $divList;
+}
+function getDayOfWeekStr(dayOfWeekIndex) {
+    return [
+        "sun",
+        "mon",
+        "tue",
+        "wed",
+        "thu",
+        "fri",
+        "sat"
+    ][dayOfWeekIndex];
 }

@@ -2,18 +2,26 @@ export function html(bases: TemplateStringsArray, ...args: unknown[]): HTMLEleme
     const idPrefix = "__html-template_will-be-replaced-slot__";
 
     let htmlElemStr = "";
+    const elems = [];
     for (let i = 0; i < bases.length; i++) {
         htmlElemStr += bases[i];
-        if (i < args.length)
-            htmlElemStr += `<div id="${idPrefix}${i}"></div>`;
+        
+        const arg = args[i];
+        if (arg === undefined)
+            continue;
+
+        if (arg instanceof HTMLElement) {
+            htmlElemStr += `<div id="${idPrefix}${elems.length}"></div>`;
+            elems.push(arg);
+        } else
+            htmlElemStr += arg;
     }
     const $element = _createElement(htmlElemStr);
 
-    for (let i = 0; i < args.length; i++) {
-        const arg = args[i];
-        const $elem = arg instanceof HTMLElement ? arg : _createElement(arg);
+    for (let i = 0; i < elems.length; i++) {
+        const elem = elems[i];
 
-        $element.querySelector(`#${idPrefix}${i}`)!.replaceWith($elem);
+        $element.querySelector(`#${idPrefix}${i}`)!.replaceWith(elem);
     }
 
     return Array.from($element.children) as HTMLElement[];

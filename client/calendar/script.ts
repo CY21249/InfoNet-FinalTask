@@ -25,6 +25,7 @@ for (const $elem of [$calendarDisplayOptionElems.year, $calendarDisplayOptionEle
 }
 
 setCalendarDisplayOptions({ year: 2024, month: 1 });
+changeCalendarDisplay({ year: 2024, month: 1 });
 
 function getCalendarDisplayOptions() {
     return {
@@ -56,11 +57,15 @@ function createCalendarDays({ year, month }: CalendarDisplayOptions) {
     const date = new Date(firstDate.getTime());
     while (date.getFullYear() === year && date.getMonth() + 1 === month) {
         $divList.push(
-            html`<div class="day">
+            html`<div class="day dow-${getDayOfWeekStr(date.getDay())}">
                 <p>${date.getDate()}</p>
             </div>`[0]
         );
         date.setDate(date.getDate() + 1);
     }
     return $divList;
+}
+
+function getDayOfWeekStr(dayOfWeekIndex: number) {
+    return ["sun", "mon", "tue", "wed", "thu", "fri", "sat"][dayOfWeekIndex];
 }
