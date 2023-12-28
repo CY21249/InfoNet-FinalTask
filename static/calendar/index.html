@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>Calender</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/common.css">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <h1>カレンダー</h1>
+    <form id="calendarDisplayOptions">
+        <div>
+            <input type="number" name="year">
+            <label for="year">年</label>
+        </div>
+        <div>
+            <input type="number" name="month">
+            <label for="month">月</label>
+        </div>
+    </form>
+
+    <div id="calendar">
+        <div class="days"></div>
+    </div>
+    
+    <script src="./script.js" type="module"></script>
+</body>
