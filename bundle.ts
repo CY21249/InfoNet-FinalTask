@@ -1,6 +1,6 @@
 /** Transpile TypeScript file "script.ts" into JavaScript */
 
-import { bundle, transpile } from "bundle";
+import { bundle } from "bundle";
 import * as Path from "path";
 import { Debugger } from "./modules/util/Debugger/Debugger.ts";
 

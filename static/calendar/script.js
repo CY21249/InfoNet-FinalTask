@@ -1,6 +1,6 @@
 /**
 * File transpiled from TypeScript and bundled 
-* - at 2023/12/29 16:49:35
+* - at 2024/1/17 15:16:00
 * - file: ./client/calendar/script.ts -> ./static/calendar/script.js
 * - using: https://deno.land/x/emit@0.32.0/mod.ts
 */
@@ -228,9 +228,7 @@ window.customElements.define(CalendarDisplayControllerElement.tagName, CalendarD
 const calendar = new Calendar("calendar1");
 calendar.attach(document);
 const today = new Date();
-const nextMonth = new Date(new Date(today).setMonth(today.getMonth() + 1));
-nextMonth.setDate(1);
 calendar.updateDisplay(CalendarDisplayOptions.from({
-    year: nextMonth.getFullYear(),
-    month: nextMonth.getMonth() + 1
+    year: today.getFullYear(),
+    month: today.getMonth() + 1
 }));
