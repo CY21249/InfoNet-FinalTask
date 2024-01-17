@@ -8,10 +8,20 @@
 </head>
 <body>
     <h1>カレンダー</h1>
-    
-    <elem-monthly_calendar-display_controller for="calendar1"></elem-monthly_calendar-display_controller>
+    <form id="calendarDisplayOptions">
+        <div>
+            <input type="number" name="year">
+            <label for="year">年</label>
+        </div>
+        <div>
+            <input type="number" name="month">
+            <label for="month">月</label>
+        </div>
+    </form>
 
-    <elem-monthly_calendar name="calendar1"></elem-monthly_calendar>
+    <div id="calendar">
+        <div class="days"></div>
+    </div>
     
     <script src="./script.js" type="module"></script>
 </body>

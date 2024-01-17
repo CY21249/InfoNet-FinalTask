@@ -1,4 +1,4 @@
-import { html } from "@/client/modules/HTML.ts";
+import { html } from "../HTML.ts";
 import { ChangeDisplayOptions, MonthlyCalendar } from "@/client/modules/Calendar/MonthlyCalendar.ts";
 
 export class MonthlyCalendarElement extends HTMLElement {

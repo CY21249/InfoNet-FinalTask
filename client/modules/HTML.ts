@@ -36,3 +36,25 @@ function _createElement(value: unknown): HTMLBodyElement {
         </body>
     `, "text/html").body as HTMLBodyElement;
 }
+type Listeners = { [K in keyof DocumentEventMap]?:  (e: DocumentEventMap[K]) => unknown }
+type Attributes = Record<string, string | boolean | number>;
+type ElementChild = HTMLElement | string | number | boolean;
+export function h<T extends keyof HTMLElementTagNameMap>(tag: T, attrs?: Attributes, listeners?: Listeners, children?: ElementChild[]) {
+    const elem = document.createElement(tag);
+    for (const [name, value] of Object.entries(attrs ?? {})) {
+        elem.setAttribute(name, `${value}`);
+    }
+    for (const [type, fn] of Object.entries(listeners ?? {})) {
+        elem.addEventListener(type, fn as EventListener);
+    }
+    elem.append(...(children?.map(child => 
+        (child instanceof HTMLElement || typeof child === "string") ? child : `${child}`
+    ) ?? []));
+
+    return elem;
+}
+document.addEventListener("click", e => e)
+
+h("body", {}, {}, [
+    h("h1", {}, { mousedown(e) { e.altKey; } }, ["Hello, World!"])
+]);

@@ -8,6 +8,9 @@
         "@/": "./",
         "bundle": "https://deno.land/x/emit@0.32.0/mod.ts",
         "path": "https://deno.land/std@0.210.0/path/mod.ts",
-        "mime": "https://deno.land/x/mimetypes@v1.0.0/mod.ts"
+        "mime": "https://deno.land/x/mimetypes@v1.0.0/mod.ts",
+        "@js-temporal": "npm:@js-temporal/polyfill",
+        "testing/": "https://deno.land/std@0.157.0/testing/",
+        "testing/asserts": "https://deno.land/std@0.157.0/testing/asserts.ts"
     }
 }

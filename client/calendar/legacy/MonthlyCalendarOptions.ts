@@ -1,4 +1,4 @@
-import { html } from "@/client/modules/HTML.ts";
+import { html } from "../../modules/HTML.ts";
 
 type Listener = (event: { value: MonthlyCalendarOptionsValue }) => unknown;
 
