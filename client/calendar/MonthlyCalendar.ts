@@ -117,17 +117,41 @@ window.customElements.define(CalendarElement.tagName, CalendarElement);
 function getCalendarElemStyle() {
     return `
     .days {
+        background-color: #FFF;
+        border-radius: 2rem;
+        box-shadow: 0 1rem 3rem #0264;
+
         display: grid;
         grid-template-columns: repeat(7, 1fr);
+        grid-auto-rows: 1fr;
+        height: 75vh;
 
         .day {
+            text-align: center;
+
+            &:nth-child(n + 8) {
+                border-top: solid 1px #0002;
+            }
+
+            & > p {
+                display: inline-block;
+                width: 4rem;
+                text-align: center;
+            }
+
             &.dow-sun {
                 color: #F00;
             }
         
             &.dow-sat {
-                color: #00F;
+                color: #f55f5f;
             }    
+
+            &.today > p {
+                border-radius: 100rem;
+                background-color: #f55f5f;
+                color: #FFF;
+            }
         }
     }
     `;
@@ -143,14 +167,25 @@ function createCalendarDays({ year, month }: CalendarDisplayOptions) {
         );
     }
 
+    const today = new Date(Date.now());
     const date = new Date(firstDate.getTime());
     while (date.getFullYear() === year && date.getMonth() + 1 === month) {
+        const class_isToday = date.toDateString() === today.toDateString() ? "today" : "";
+        const class_dayOfWeek = `dow-${getDayOfWeekStr(date.getDay())}`;
+
         $divList.push(
-            h("div", { class: `day dow-${getDayOfWeekStr(date.getDay())}` }, {}, [
+            h("div", { class: `day ${class_dayOfWeek} ${class_isToday}` }, {}, [
                 h("p", {}, {}, [date.getDate()])
             ])
         );
         date.setDate(date.getDate() + 1);
+    }
+    if (date.getDay() >= 1) {
+        for (let i = date.getDay(); i < 7; i++) {
+            $divList.push(
+                h("div", { class: "day day-padding" })
+            );
+        }
     }
     return $divList;
 }

@@ -1,14 +1,5 @@
-.days {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-
-    .day {
-        &.dow-sun {
-            color: #F00;
-        }
-    
-        &.dow-sat {
-            color: #00F;
-        }    
-    }
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
 }
